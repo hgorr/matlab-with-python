@@ -2,7 +2,7 @@ function [t,airQual] = myReportTemp()
  
     apikey = readtable("accessKey.txt","TextType","string"); 
     jsonData = py.weather.get_current_weather("Boston","US",apikey.Key(1));
-    weatherData = py.weather.parse_json(jsonData);
+    weatherData = py.weather.parse_current_json(jsonData);
     data = struct(weatherData);
     t = data.temp;
     airQual = predictAirQual(weatherData);
