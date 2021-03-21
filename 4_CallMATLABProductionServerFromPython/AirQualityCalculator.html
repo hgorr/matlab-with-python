@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Air Quality Calculator</title>
+
+<style>
+  div.container {
+      width: 100%;
+      border: 1px solid gray;
+  }
+
+  header, footer {
+      padding: 1em;
+      color: white;
+      background-color: DodgerBlue;
+      clear: left;
+      text-align: center;
+  }
+
+  nav {
+      float: left;
+      max-width: 200px;
+      margin: 0;
+      padding: 1em;
+  }
+
+  nav ul {
+      list-style-type: none;
+      padding: 0;
+  }
+
+  nav ul a {
+      text-decoration: none;
+  }
+
+  article {
+      margin-left: 200px;
+      border-left: 1px solid gray;
+      padding: 1em;
+      overflow: hidden;
+  }
+</style>
+
+</head>
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Air Quality Conditions</h1>
+        </header>
+
+        <article>
+            <p>Determine air quality conditions in your area.</p>
+                Location: <br>
+                <input type="text" id="location_input" value="Boston, MA"><br>
+                <span id="submit_button" onclick="submitButtonPressed">Submit</span><br>
+            <div id="results"></div>
+
+             <!--<p>
+                    <iframe height="185" src="http://epa.gov/cgi-bin/widget.cgi?02116" width="293"></iframe>
+                </p>-->
+        </article>
+
+        <footer>
+            
+        </footer>
+        
+    </div>
+
+<script>
+
+var url = "http://localhost:9910/AirQualReport/CurrentAirQual"
+
+const locationInput = document.getElementById('location_input');
+const submitButton = document.getElementById('submit_button');
+const results = document.getElementById('results');
+
+submitButton.addEventListener('click',submitButtonPressed);
+
+function submitButtonPressed() {
+    results.innerHTML="You pressed a button on " + locationInput.value + "!";
+
+    var body = {
+        "nargout":3,
+        "rhs":locationInput.value
+    }
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", function(evt){
+      processMpsResponse(evt)
+    }, false);
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify(body));
+
+}
+
+function processMpsResponse (evt) {
+    console.log(evt.target.responseText);
+
+    var jason = JSON.parse(evt.target.responseText);
+    console.log(jason);
+
+    if(jason["error"] != undefined) {
+        console.log("error");
+        results.innerHTML = "Something went wrong. Try again."
+        return;
+    }
+
+    var aq = jason.lhs[0].mwdata;
+    var temp = jason.lhs[1].mwdata;
+    var temp_forecast = jason.lhs[2].mwdata;
+    results.innerHTML=aq+"<br>"+temp+" F<br>"+temp_forecast;
+  }
+
+</script>
+
+</body>
+</html>

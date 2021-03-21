@@ -58,7 +58,7 @@ end
 
 function data = convertData(data)
 % Rename variables and convert data types
-data = removevars(data,["temp_min","temp_max"]);
+data = removevars(data,["feels_like","temp_min","temp_max"]);
 % Check for wind direction (deg), sometimes missing
 if ~any(data.Properties.VariableNames == "deg")
     deg = "";
