@@ -11,14 +11,19 @@ function [airQual,T,Tforecast,dates,data,fdata] = CurrentAirQual(loc)
 if nargin < 1
     loc = "Boston";
 end
+loc = convertCharsToStrings(loc);
+
+if contains(loc,",")
+    loc =  extractBefore(loc,",");
+    loc = strip(loc);
+end
 
 % Get access key
-% Persist so it's only read once
+% Persist so it's only read once (could write a class, use Redis cache)
 persistent apikey;
 if isempty(apikey)
     apikey = readtable("accessKey.txt","TextType","string");
 end
-
 
 % Read current weather
 try

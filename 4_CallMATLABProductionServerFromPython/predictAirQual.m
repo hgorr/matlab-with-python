@@ -1,4 +1,4 @@
-function airQual = predictAirQual(data)
+    function airQual = predictAirQual(data)
 % PREDICTAIRQUAL Predict air quality, based on machine learning model
 %
 %#function CompactClassificationEnsemble

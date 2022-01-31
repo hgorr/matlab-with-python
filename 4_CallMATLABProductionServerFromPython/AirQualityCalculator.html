@@ -11,6 +11,8 @@
   }
 
   header, footer {
+  font-family: "Calibri", sans-serif;
+  font-weight: lighter;
       padding: 1em;
       color: white;
       background-color: DodgerBlue;
@@ -19,6 +21,8 @@
   }
 
   nav {
+    font-family: "Calibri", sans-serif;
+  font-weight: lighter;
       float: left;
       max-width: 200px;
       margin: 0;
@@ -26,6 +30,8 @@
   }
 
   nav ul {
+    font-family: "Calibri", sans-serif;
+  font-weight: lighter;
       list-style-type: none;
       padding: 0;
   }
@@ -35,8 +41,11 @@
   }
 
   article {
-      margin-left: 200px;
-      border-left: 1px solid gray;
+      font-family: "Calibri", sans-serif;
+  font-weight: lighter;
+  font-size: 20px;
+      margin-left: 0px;
+      border-left: 10px solid orange;
       padding: 1em;
       overflow: hidden;
   }
@@ -53,9 +62,12 @@
 
         <article>
             <p>Determine air quality conditions in your area.</p>
-                Location: <br>
-                <input type="text" id="location_input" value="Boston, MA"><br>
-                <span id="submit_button" onclick="submitButtonPressed">Submit</span><br>
+                Location: &nbsp;  
+                <input type="text" id="location_input" value="Boston, MA" style="font-size: 15px; width: 150px; height: 30px;"><br>
+                    <br>
+                <input type="button" value=" Submit " onclick="submitButtonPressed();" style="border: none; border-radius: 12px; background-color: #FED8B1; font-size: 15px; width: 100px; height: 40px;" />
+                <br>
+                <br>
             <div id="results"></div>
 
              <!--<p>
@@ -64,7 +76,7 @@
         </article>
 
         <footer>
-            
+            Copyright &copy; 2018-2021 MathWorks, Inc.
         </footer>
         
     </div>
@@ -111,7 +123,7 @@ function processMpsResponse (evt) {
     var aq = jason.lhs[0].mwdata;
     var temp = jason.lhs[1].mwdata;
     var temp_forecast = jason.lhs[2].mwdata;
-    results.innerHTML=aq+"<br>"+temp+" F<br>"+temp_forecast;
+    results.innerHTML="The air quality is <b>"+aq+"</b>.<br> The current temperature is <b>"+temp+" F</b>.";
   }
 
 </script>
